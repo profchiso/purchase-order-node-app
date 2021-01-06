@@ -14,7 +14,7 @@ const clientQouteSchema = new mongoose.Schema({
 		type: String,
 	},
 	qouteQuantity: {
-		type: String,
+		type: Number,
 	},
 	batch: {
 		type: String,
