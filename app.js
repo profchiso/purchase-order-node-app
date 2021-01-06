@@ -9,10 +9,9 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const cronJob = require('node-cron');
 
 //user defined modules
-const userRoute = require('./routes/user');
+const customerRoute = require('./routes/customer');
 
 // db controller
 const connectToDB = require('./controllers/dbController');
@@ -69,51 +68,10 @@ app.get('/logout', (req, res) => {
 	});
 });
 
-app.use('/api/v1/user', userRoute); //users route
-app.use('/api/v1/activation', activationRoute); //activation  route
-app.use('/api/v1/cashout', cashoutRoute); //cashout route
-app.use('/api/v1/deposit', depositRoute); //deposit route
-app.use('/api/v1/investment', investmentRoute); //investment route
-app.use('/api/v1/withdrawal', withdrawalRoute); //withdrawal route
-app.use('/api/v1/adminapi', adminAPI); //admin api  route
-app.use('/api/v1/dollartransfer', dollarTransferRoute); //dollarTransfer  route
-app.use('/dashboard', dasboardRoute); // dashboard route
-app.use('/admin/dashboard', adminRoute); //admin route
+app.use('/api/v1/customers', customerRoute); //users route
 
 //catch undefined endpoints
 // app.use(undefinedRoutes);
-
-//cronjobs
-cronJob.schedule('*/5 * * * *', () => {
-	//run every 5minutes
-	UpdateMaturedInvestment();
-});
-cronJob.schedule('*/1 * * * *', () => {
-	//run ever 1 minutes
-	updateDepositStatus();
-	// async function fetchCompleted() {
-	// 	console.log('fetch runing');
-	// 	const Deposit = require('./models/Deposit');
-	// 	const coinbase = require('coinbase-commerce-node');
-	// 	const Client = coinbase.Client;
-	// 	Client.init(process.env.COIN_BASE_KEY);
-	// 	const Charge = coinbase.resources.Charge;
-	// 	// 	//end of coinbase
-	// 	const pendingDeposits = await Deposit.find({
-	// 		depositStatus: 'COMPLETED',
-	// 	});
-	// 	for (let deposit of pendingDeposits) {
-	// 		const charge = await Charge.retrieve(deposit.coinBaseChargeId);
-	// 		console.log(charge.payments[0].value.local.amount);
-	// 	}
-	// }
-	// fetchCompleted();
-});
-
-cronJob.schedule('0 */4 * * *', () => {
-	//runs every 10minutes
-	deleteExpiredOrCanceledDeposit();
-});
 
 //spin up the server on the env port number
 const PORT = process.env.PORT || 5000;
