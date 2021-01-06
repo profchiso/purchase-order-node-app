@@ -31,4 +31,4 @@ const controllerSchema = new mongoose.Schema({
 });
 
 const Controller = mongoose.model('Controller', controllerSchema);
-module.exports = User;
+module.exports = Controller;

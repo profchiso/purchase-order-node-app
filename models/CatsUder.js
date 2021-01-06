@@ -16,4 +16,4 @@ const catsUnderSchema = new mongoose.Schema({
 });
 
 const CatUnder = mongoose.model('CatUnder', catsUnderSchema);
-module.exports = User;
+module.exports = CatUnder;

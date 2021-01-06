@@ -35,4 +35,4 @@ const clientQouteSchema = new mongoose.Schema({
 });
 
 const clientQoute = mongoose.model('ClientQoute', clientQouteSchema);
-module.exports = User;
+module.exports = clientQoute;
