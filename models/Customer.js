@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const userSchema = new mongoose.Schema({
-	userUniqueCode: {
+const customerSchema = new mongoose.Schema({
+	htslUniqueCode: {
 		type: String,
 		required: true,
 	},
-	businessCode: {
+	htslBusinessCode: {
 		type: String,
 		unique: true,
 	},
@@ -94,5 +94,5 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
-const User = mongoose.model('User', userSchema);
+const Customer = mongoose.model('Customer', customerSchema);
 module.exports = User;
