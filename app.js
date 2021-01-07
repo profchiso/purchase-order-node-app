@@ -50,24 +50,6 @@ app.use(hpp({ whitelist: [] })); // use the whitelist option to specify some par
 
 //routes
 
-app.get('/', (req, res) => {
-	return res.status(200).render('index', {});
-});
-
-app.get('/logout', (req, res) => {
-	res.cookie('accessToken', 'logout', {
-		httpOnly: true,
-		expires: new Date(Date.now() + 5 * 1000),
-	});
-
-	res.status(200).json({
-		success: true,
-		data: {
-			accessToken: res.cookie.accessToken,
-		},
-	});
-});
-
 app.use('/api/v1/customers', customerRoute); //users route
 
 //catch undefined endpoints
