@@ -27,7 +27,7 @@ router.get('/', authenticate, authorize(['admin']), async (req, res) => {
 			(match) => `$${match}`
 		);
 
-		let query = Activation.find(JSON.parse(queryToString)); // the .select excludes any spacified field before sending the document
+		let query = Customer.find(JSON.parse(queryToString)); // the .select excludes any spacified field before sending the document
 
 		//sorting query result
 		if (req.query.sort) {
@@ -58,7 +58,7 @@ router.get('/', authenticate, authorize(['admin']), async (req, res) => {
 
 		//handle a case where user specify page that does not exists
 		if (req.query.page) {
-			let numberOfDocument = await Activation.countDocuments();
+			let numberOfDocument = await Customer.countDocuments();
 			if (skip >= numberOfDocument) {
 				apiError.message = 'This page does not exits';
 				console.log('apiError', apiError);
@@ -67,12 +67,12 @@ router.get('/', authenticate, authorize(['admin']), async (req, res) => {
 		}
 
 		//execute query
-		const activations = await query; // query.sort().select().skip().limit()
+		const customers = await query; // query.sort().select().skip().limit()
 		return res.status(200).json({
 			success: true,
 
 			data: {
-				activations,
+				customers,
 			},
 		});
 	} catch (err) {
@@ -89,9 +89,9 @@ router.get('/', authenticate, authorize(['admin']), async (req, res) => {
 router.get('/:id', async (req, res) => {
 	try {
 		const apiError = {};
-		const activation = await Activation.findById(req.params.id);
-		if (!activation) {
-			apiError.message = `Invalid Activation id `;
+		const customer = await Customer.findById(req.params.id);
+		if (!customer) {
+			apiError.message = `Invalid customer id `;
 			apiError.success = false;
 			console.log('apiError', apiError);
 			return res.status(404).json(apiError);
@@ -100,7 +100,7 @@ router.get('/:id', async (req, res) => {
 		return res.status(200).json({
 			success: true,
 			data: {
-				activation,
+				customer,
 			},
 		});
 	} catch (error) {
@@ -120,32 +120,11 @@ router.post('/', authenticate, async (req, res) => {
 	try {
 		let user = req.user;
 
-		if (user.isActivated) {
-			apiError.message = 'User Already activated';
-			apiError.success = false;
-			console.log('apiError', apiError);
-			return res.status(400).json(apiError);
-		}
-
-		//check if user balance > $5
-		//let balance = parseInt(user.balance);
-		if (user.balance < 5) {
-			apiError.message = 'Insufficient Balance,  $5 dollars required';
-			apiError.success = false;
-			console.log('apiError', apiError);
-			return res.status(400).json(apiError);
-		}
-
 		// remove $5 from user balance
 		user.balance = user.balance - 5;
 
-		//create activation
-		let activation = await Activation.create({
-			amount: 5,
-			user: user.userName,
-			activationDate: moment(),
-		});
-		let cashFlow = await Cashflow.create({
+		// create customers
+		let customer = await Customer.create({
 			amount: 5,
 			user: user.userName,
 			description: 'Account activation',
@@ -155,19 +134,11 @@ router.post('/', authenticate, async (req, res) => {
 			createdAt: moment(),
 		});
 
-		//set the is Activated properety of user to true
-		user.isActivated = true;
-
-		//save the user back
-		const updatedUser = await user.save();
-
 		return res.status(201).json({
 			success: true,
 			data: {
-				message: 'Activation successfull',
-				user: updatedUser,
-				activation,
-				cashFlow,
+				message: 'Registration successfull',
+				customer,
 			},
 		});
 	} catch (error) {
@@ -184,11 +155,11 @@ router.post('/', authenticate, async (req, res) => {
 router.delete('/:id', authenticate, authorize(['admin']), async (req, res) => {
 	try {
 		const { id } = req.params;
-		await Activation.findByIdAndRemove(id);
+		await Customer.findByIdAndRemove(id);
 		return res.status(204).json({
 			success: true,
 			data: {
-				message: `Activation with the id ${id} has been deleted`,
+				message: `customer with the id ${id} has been deleted`,
 			},
 		});
 	} catch (err) {
