@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const clientQouteSchema = new mongoose.Schema({
 	htslUniqueCode: {
 		type: String,
-		required: true,
 	},
 	htslBusinessCode: {
 		type: String,
@@ -30,9 +29,9 @@ const clientQouteSchema = new mongoose.Schema({
 		type: String,
 	},
 	initDel: {
-		type: String,
+		type: Number,
 	},
 });
 
-const clientQoute = mongoose.model('ClientQoute', clientQouteSchema);
-module.exports = clientQoute;
+const HTSL_ClientQoute = mongoose.model('HTSL_ClientQoute', clientQouteSchema);
+module.exports = HTSL_ClientQoute;

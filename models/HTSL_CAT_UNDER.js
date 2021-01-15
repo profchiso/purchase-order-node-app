@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const catsUnderSchema = new mongoose.Schema({
 	catCode: {
 		type: String,
-		required: true,
 	},
 	catName: {
 		type: String,
@@ -10,10 +9,10 @@ const catsUnderSchema = new mongoose.Schema({
 	subCatName: {
 		type: String,
 	},
-	subCatCd: {
+	subCatCode: {
 		type: String,
 	},
 });
 
-const CatUnder = mongoose.model('CatUnder', catsUnderSchema);
-module.exports = CatUnder;
+const HTSL_CatUnder = mongoose.model('HTSL_CatUnder', catsUnderSchema);
+module.exports = HTSL_CatUnder;

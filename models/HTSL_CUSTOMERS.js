@@ -3,21 +3,23 @@ const customerSchema = new mongoose.Schema({
 	htslUniqueCode: {
 		type: String,
 		required: true,
+		unique: true,
+		index: true,
 	},
 	htslBusinessCode: {
 		type: String,
 		unique: true,
+		required: true,
+		index: true,
 	},
 
 	userType: {
 		type: String,
-		enum: ['user', 'admin', 'developer'],
-		default: 'user',
+		enum: ['Client', 'Vendor', 'Admin'],
 	},
 
 	userTitle: {
 		type: String,
-		required: true,
 	},
 	userFirstName: {
 		type: String,
@@ -30,6 +32,8 @@ const customerSchema = new mongoose.Schema({
 	businessName: {
 		type: String,
 		required: true,
+		unique: true,
+		index: true,
 	},
 	businessAddress: {
 		type: String,
@@ -39,14 +43,12 @@ const customerSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	businessName: {
-		type: String,
-		required: true,
-	},
+
 	email: {
 		type: String,
 		required: true,
 		unique: true,
+		index: true,
 	},
 	phoneNumber: {
 		type: String,
@@ -64,9 +66,11 @@ const customerSchema = new mongoose.Schema({
 	},
 	businessType: {
 		type: String,
+		index: true,
 	},
 	userPrivilege: {
 		type: String,
+		enum: ['User', 'Admin'],
 	},
 	registrationVerificationCode: {
 		type: String,
@@ -82,7 +86,7 @@ const customerSchema = new mongoose.Schema({
 		default: Date.now(),
 	},
 
-	acsExp: {
+	accessExpiration: {
 		type: String,
 	},
 	joinedDate: {
@@ -94,5 +98,5 @@ const customerSchema = new mongoose.Schema({
 	},
 });
 
-const Customer = mongoose.model('Customer', customerSchema);
-module.exports = Customer;
+const HTSL_Customer = mongoose.model('HTSL_Customer', customerSchema);
+module.exports = HTSL_Customer;
