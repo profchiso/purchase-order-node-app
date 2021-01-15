@@ -3,19 +3,22 @@ const controllerSchema = new mongoose.Schema({
 	htslUniqueCode: {
 		type: String,
 		required: true,
+		index: true,
 	},
 	adminFirstName: {
 		type: String,
+		indxex: true,
 	},
 	adminLastName: {
 		type: String,
+		index: true,
 	},
 	adminEmail: {
 		type: String,
+		index: true,
+		required: true,
 	},
-	adminEmail: {
-		type: String,
-	},
+
 	adminPermanentPassword: {
 		type: String,
 	},
@@ -24,11 +27,12 @@ const controllerSchema = new mongoose.Schema({
 	},
 	adminPrivilegeLevel: {
 		type: String,
+		enum: ['Admin', 'Moderator', 'Technical'],
 	},
 	timeStamp: {
 		type: String,
 	},
 });
 
-const Controller = mongoose.model('Controller', controllerSchema);
-module.exports = Controller;
+const HTSL_Controller = mongoose.model('HTSL_Controller', controllerSchema);
+module.exports = HTSL_Controller;
