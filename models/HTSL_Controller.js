@@ -7,7 +7,7 @@ const controllerSchema = new mongoose.Schema({
 	},
 	adminFirstName: {
 		type: String,
-		indxex: true,
+		index: true,
 	},
 	adminLastName: {
 		type: String,
