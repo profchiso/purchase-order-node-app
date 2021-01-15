@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const marketFunctionSchema = new mongoose.Schema({
-	marketComm: {
+	marketCommission: {
 		type: String,
 		required: true,
 	},
@@ -27,5 +27,8 @@ const marketFunctionSchema = new mongoose.Schema({
 	},
 });
 
-const MarketFunction = mongoose.model('MarketFunction', marketFunctionSchema);
-module.exports = MarketFunction;
+const HTSL_MarketFunction = mongoose.model(
+	'HTSL_MarketFunction',
+	marketFunctionSchema
+);
+module.exports = HTSL_MarketFunction;
