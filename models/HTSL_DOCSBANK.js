@@ -3,9 +3,11 @@ const docsBankSchema = new mongoose.Schema({
 	htslUniqueCode: {
 		type: String,
 		required: true,
+		index: true,
 	},
 	htslBusinessCode: {
 		type: String,
+		index: true,
 	},
 	vendorCode: {
 		type: String,
@@ -13,11 +15,10 @@ const docsBankSchema = new mongoose.Schema({
 	vendorName: {
 		type: String,
 	},
-	vendorName: {
-		type: String,
-	},
+
 	productCode: {
 		type: String,
+		index: true,
 	},
 	quantityOrdered: {
 		type: Number,
@@ -34,6 +35,7 @@ const docsBankSchema = new mongoose.Schema({
 	},
 	batch: {
 		type: String,
+		index: true,
 	},
 	approvalStatus: {
 		type: String,
@@ -51,10 +53,14 @@ const docsBankSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now(),
 	},
+	orderTime: {
+		type: Date,
+		default: Date.now(),
+	},
 	timeStamp: {
 		type: String,
 	},
 });
 
-const DocsBank = mongoose.model('DocsBank', catsUnderSchema);
-module.exports = DocsBank;
+const HTSL_DocsBank = mongoose.model('HTSL_DocsBank', docsBankSchema);
+module.exports = HTSL_DocsBank;
