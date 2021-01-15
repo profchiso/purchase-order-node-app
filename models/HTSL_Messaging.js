@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const messagingSchema = new mongoose.Schema({
-	receiverCd: {
+	receiverCode: {
 		type: String,
 	},
 	message: {
@@ -16,6 +16,10 @@ const messagingSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now(),
 	},
+	sendTime: {
+		type: Date,
+		default: Date.now(),
+	},
 	timeStamp: {
 		type: String,
 	},
@@ -27,5 +31,5 @@ const messagingSchema = new mongoose.Schema({
 	},
 });
 
-const Messaging = mongoose.model('Messaging', messagingSchema);
-module.exports = Messaging;
+const HTSL_Messaging = mongoose.model('HTSL_Messaging', messagingSchema);
+module.exports = HTSL_Messaging;
